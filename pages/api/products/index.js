@@ -32,13 +32,17 @@ export default async function handler(req, res) {
                             { description: { $regex: search, $options: 'i' } }
                         ]
                     })
+                    .project({ image: 0 }) // Exclude base64 image field
                     .toArray();
-                return res.status(200).json(products);
+                return res.status(200).json({ success: true, products });
             }
 
-            // Get all products
-            const products = await db.collection('products').find({}).toArray();
-            return res.status(200).json(products);
+            // Get all products (exclude large image field to reduce response size)
+            const products = await db.collection('products')
+                .find({})
+                .project({ image: 0 }) // Exclude base64 image field
+                .toArray();
+            return res.status(200).json({ success: true, products });
         }
 
         return res.status(405).json({ error: 'Method not allowed' });
