@@ -58,7 +58,7 @@ export default function Header() {
                 <div className="flex items-center justify-between">
                     {/* Logo */}
                     <Link href="/" className="flex items-center space-x-2">
-                        <Image src="/logo.png" width={40} height={40} alt="VIDA Logo" />
+                        <Image src="/header-logo.png" width={40} height={40} alt="VIDA Logo" />
                         <div className="text-xl font-bold text-gray-800">VIDA Bioleather</div>
                     </Link>
 

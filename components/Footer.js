@@ -14,7 +14,7 @@ export default function Footer() {
                     {/* Company Info */}
                     <div className="col-span-1 md:col-span-2">
                         <div className="flex items-center space-x-2 mb-4">
-                            <Image src="/logo.png" width={40} height={40} alt="VIDA Logo" />
+                            <Image src="/footer-logo.png" width={40} height={40} alt="VIDA Logo" />
                             <span className="text-xl font-bold">VIDA Bioleather</span>
                         </div>
                         <p className="text-gray-400 mb-4">
