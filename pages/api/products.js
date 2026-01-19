@@ -1,0 +1,47 @@
+/**
+ * Products API
+ * Public endpoint to get all products
+ */
+
+import clientPromise from '../../lib/db';
+
+export default async function handler(req, res) {
+    if (req.method !== 'GET') {
+        return res.status(405).json({ error: 'Method not allowed' });
+    }
+
+    try {
+        const client = await clientPromise;
+        const db = client.db('ecommerce');
+
+        const { id } = req.query;
+
+        // If ID is provided, get single product
+        if (id) {
+            const product = await db.collection('products').findOne({ id: id });
+
+            if (!product) {
+                return res.status(404).json({
+                    success: false,
+                    error: 'Product not found',
+                });
+            }
+
+            return res.status(200).json(product);
+        }
+
+        // Get all products
+        const products = await db.collection('products').find({}).toArray();
+
+        return res.status(200).json({
+            success: true,
+            products,
+        });
+    } catch (error) {
+        console.error('Error fetching products:', error);
+        return res.status(500).json({
+            success: false,
+            error: 'Failed to fetch products',
+        });
+    }
+}

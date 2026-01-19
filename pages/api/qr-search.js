@@ -1,0 +1,52 @@
+/**
+ * QR Code Search API
+ * Search for items by QR code in qr_codes collection
+ */
+
+import clientPromise from '../../lib/db';
+
+export default async function handler(req, res) {
+    if (req.method !== 'GET') {
+        return res.status(405).json({ error: 'Method not allowed' });
+    }
+
+    const { code } = req.query;
+
+    if (!code) {
+        return res.status(400).json({ error: 'QR code is required' });
+    }
+
+    try {
+        const client = await clientPromise;
+        const db = client.db('ecommerce');
+
+        // Search in qr_codes collection
+        const qrItem = await db.collection('qr_codes').findOne({ qrCode: code });
+
+        if (!qrItem) {
+            return res.status(404).json({
+                success: false,
+                error: 'QR code not found',
+            });
+        }
+
+        return res.status(200).json({
+            success: true,
+            data: {
+                id: qrItem._id,
+                qrCode: qrItem.qrCode,
+                customCode: qrItem.customCode,
+                productName: qrItem.productName,
+                productDescription: qrItem.productDescription,
+                createdAt: qrItem.createdAt,
+                createdBy: qrItem.createdBy,
+            },
+        });
+    } catch (error) {
+        console.error('Error searching QR code:', error);
+        return res.status(500).json({
+            success: false,
+            error: 'Failed to search QR code',
+        });
+    }
+}
