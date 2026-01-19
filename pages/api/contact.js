@@ -3,7 +3,7 @@
  * POST /api/contact - Submit contact form (can be extended to send emails or store in DB)
  */
 
-import clientPromise from '../../../lib/db';
+import clientPromise from '../../lib/db';
 
 export default async function handler(req, res) {
     try {
