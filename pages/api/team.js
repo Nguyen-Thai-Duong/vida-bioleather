@@ -15,8 +15,11 @@ export default async function handler(req, res) {
             // Fetch team members
             const members = await teamCollection.find({}).toArray();
 
+            console.log('Team members from DB:', members.length);
+
             // If no team members in database, return default data
-            if (members.length === 0) {
+            if (!members || members.length === 0) {
+                console.log('Using fallback team data');
                 return res.status(200).json({
                     members: [
                         {
