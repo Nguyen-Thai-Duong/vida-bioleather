@@ -34,7 +34,14 @@ export default async function handler(req, res) {
                     })
                     .project({ image: 0 }) // Exclude base64 image field
                     .toArray();
-                return res.status(200).json({ success: true, products });
+
+                // Add imageUrl for each product
+                const productsWithImages = products.map(p => ({
+                    ...p,
+                    imageUrl: `/api/products/${p.id}/image`
+                }));
+
+                return res.status(200).json({ success: true, products: productsWithImages });
             }
 
             // Get all products (exclude large image field to reduce response size)
@@ -42,7 +49,14 @@ export default async function handler(req, res) {
                 .find({})
                 .project({ image: 0 }) // Exclude base64 image field
                 .toArray();
-            return res.status(200).json({ success: true, products });
+
+            // Add imageUrl for each product
+            const productsWithImages = products.map(p => ({
+                ...p,
+                imageUrl: `/api/products/${p.id}/image`
+            }));
+
+            return res.status(200).json({ success: true, products: productsWithImages });
         }
 
         return res.status(405).json({ error: 'Method not allowed' });

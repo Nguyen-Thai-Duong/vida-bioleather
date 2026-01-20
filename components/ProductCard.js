@@ -23,7 +23,7 @@ const ProductCard = memo(function ProductCard({ product }) {
             <Link href={`/products/${product.id}`} className="block">
                 <div className="relative h-64 bg-gray-200">
                     <Image
-                        src={product.image}
+                        src={product.imageUrl || product.image || '/placeholder.png'}
                         alt={product.name}
                         fill
                         className="object-cover hover:scale-105 transition-transform duration-300"
