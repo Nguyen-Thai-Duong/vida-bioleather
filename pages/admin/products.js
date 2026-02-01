@@ -73,6 +73,14 @@ export default function AdminProducts() {
             const data = await response.json();
             console.log('Fetched products:', data);
             if (response.ok && data.success && data.products) {
+                // Log each product's image status
+                data.products.forEach((p, idx) => {
+                    console.log(`Product ${idx} (${p.name}):`, {
+                        hasImage: !!p.image,
+                        imageLength: p.image ? p.image.length : 0,
+                        imagePreview: p.image ? p.image.substring(0, 50) + '...' : 'NO IMAGE'
+                    });
+                });
                 setProducts(data.products);
             } else {
                 console.warn('No products found or invalid response');

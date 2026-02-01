@@ -97,6 +97,14 @@ async function handler(req, res) {
                 return res.status(404).json({ error: 'Product not found' });
             }
 
+            // Verify the update by fetching the product
+            const updatedProduct = await db.collection('products').findOne({ _id: new ObjectId(productId) });
+            console.log('Verification - Updated product:', {
+                name: updatedProduct?.name,
+                hasImage: !!updatedProduct?.image,
+                imageLength: updatedProduct?.image?.length || 0
+            });
+
             return res.status(200).json({
                 success: true,
                 message: 'Product updated successfully',
