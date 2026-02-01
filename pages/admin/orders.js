@@ -154,7 +154,7 @@ export default function AdminOrders() {
                                                 {new Date(order.createdAt).toLocaleDateString()}
                                             </td>
                                             <td className="px-6 py-4">{order.items.length}</td>
-                                            <td className="px-6 py-4 font-semibold">₫{order.totalAmount.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</td>
+                                            <td className="px-6 py-4 font-semibold">{order.totalAmount.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}₫</td>
                                             <td className="px-6 py-4">
                                                 <span className={`px-3 py-1 rounded text-sm font-semibold ${order.status === 'pending' ? 'bg-yellow-100 text-yellow-800' :
                                                     order.status === 'received' ? 'bg-blue-100 text-blue-800' :
@@ -222,7 +222,7 @@ export default function AdminOrders() {
                                         </div>
                                         <div className="flex justify-between font-bold text-lg mt-4">
                                             <span>Total:</span>
-                                            <span>₫{selectedOrder.totalAmount.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span>
+                                            <span>{selectedOrder.totalAmount.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}₫</span>
                                         </div>
                                     </div>
 

@@ -53,61 +53,68 @@ export default function Header() {
     ];
 
     return (
-        <header className="bg-white shadow-md sticky top-0 z-50">
-            <div className="container mx-auto px-4 py-4">
+        <header className="bg-white/80 backdrop-blur-lg border-b border-gray-200/50 sticky top-0 z-50 shadow-sm">
+            <div className="container mx-auto px-8 py-5">
                 <div className="flex items-center justify-between">
                     {/* Logo */}
-                    <Link href="/" className="flex items-center space-x-2">
-                        <Image src="/header-logo.png" width={40} height={40} alt="VIDA Logo" />
-                        <div className="text-xl font-bold text-gray-800">VIDA Bioleather</div>
+                    <Link href="/" className="flex items-center gap-3 group">
+                        <div className="relative">
+                            <Image src="/header-logo.png" width={48} height={48} alt="VIDA Logo" className="group-hover:scale-110 transition-transform duration-300" />
+                        </div>
+                        <div className="text-2xl font-black text-gray-900">VIDA <span className="text-emerald-600">Bioleather</span></div>
                     </Link>
 
                     {/* Desktop Navigation */}
-                    <nav className="hidden md:flex items-center space-x-8">
+                    <nav className="hidden md:flex items-center gap-10">
                         {navLinks.map((link) => (
                             <Link
                                 key={link.href}
                                 href={link.href}
-                                className={`text-gray-700 hover:text-blue-600 transition-colors ${router.pathname === link.href ? 'text-blue-600 font-semibold' : ''
+                                className={`text-base font-semibold hover:text-emerald-600 transition-colors relative ${router.pathname === link.href
+                                    ? 'text-emerald-600'
+                                    : 'text-gray-700'
                                     }`}
                             >
                                 {link.label}
+                                {router.pathname === link.href && (
+                                    <span className="absolute -bottom-2 left-0 right-0 h-0.5 bg-gradient-to-r from-emerald-600 to-teal-600 rounded-full"></span>
+                                )}
                             </Link>
                         ))}
                     </nav>
 
                     {/* Right Side: Auth & Cart */}
-                    <div className="flex items-center space-x-4">
+                    <div className="flex items-center gap-5">
                         {/* Auth Buttons/User Menu */}
                         {isAuthenticated && user ? (
-                            <div className="hidden md:flex items-center space-x-4">
+                            <div className="hidden md:flex items-center gap-5">
                                 <Link
                                     href={user.role === 'admin' ? '/admin/dashboard' : '/profile'}
-                                    className="text-gray-700 hover:text-blue-600 transition-colors font-semibold"
+                                    className="text-gray-700 hover:text-emerald-600 transition-colors font-semibold"
                                 >
                                     {user.name}
-                                    {user.role === 'admin' && ' (Admin)'}
+                                    {user.role === 'admin' && <span className="ml-1 text-xs bg-emerald-100 text-emerald-700 px-2 py-0.5 rounded-full">Admin</span>}
                                 </Link>
                                 <button
                                     onClick={handleLogout}
-                                    className="text-gray-700 hover:text-red-600 transition-colors"
+                                    className="text-gray-600 hover:text-red-600 transition-colors font-medium"
                                 >
                                     Logout
                                 </button>
                             </div>
                         ) : (
-                            <div className="hidden md:flex items-center space-x-4">
+                            <div className="hidden md:flex items-center gap-4">
                                 <Link
                                     href="/login"
-                                    className="text-gray-700 hover:text-blue-600 transition-colors"
+                                    className="text-gray-700 hover:text-emerald-600 transition-colors font-semibold"
                                 >
                                     Login
                                 </Link>
                                 <Link
                                     href="/register"
-                                    className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors"
+                                    className="bg-gradient-to-r from-emerald-600 to-teal-600 text-white px-6 py-2.5 rounded-xl hover:shadow-lg hover:scale-105 transition-all duration-300 font-semibold"
                                 >
-                                    Register
+                                    Sign Up
                                 </Link>
                             </div>
                         )}
@@ -116,10 +123,10 @@ export default function Header() {
                         <div className="relative">
                             <Link
                                 href="/cart"
-                                className="block p-2 hover:bg-gray-100 rounded-lg transition-colors"
+                                className="block p-3 hover:bg-emerald-50 rounded-xl transition-all duration-300 group"
                             >
                                 <svg
-                                    className="w-6 h-6 text-gray-700"
+                                    className="w-6 h-6 text-gray-700 group-hover:text-emerald-600 transition-colors"
                                     fill="none"
                                     stroke="currentColor"
                                     viewBox="0 0 24 24"
@@ -133,15 +140,15 @@ export default function Header() {
                                 </svg>
                             </Link>
                             {mounted && itemCount > 0 && (
-                                <div className="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center pointer-events-none">
-                                    {itemCount}
+                                <div className="absolute -top-1 -right-1 bg-gradient-to-r from-red-500 to-pink-500 text-white text-xs font-bold rounded-full w-6 h-6 flex items-center justify-center pointer-events-none shadow-lg">
+                                    {itemCount > 9 ? '9+' : itemCount}
                                 </div>
                             )}
                         </div>
 
                         {/* Mobile Menu Button */}
                         <button
-                            className="md:hidden p-2 hover:bg-gray-100 rounded-lg"
+                            className="md:hidden p-2 hover:bg-gray-100 rounded-xl transition-colors"
                             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
                         >
                             <svg
@@ -163,25 +170,28 @@ export default function Header() {
 
                 {/* Mobile Menu */}
                 {mobileMenuOpen && (
-                    <nav className="md:hidden mt-4 pb-4 border-t pt-4">
+                    <nav className="md:hidden mt-6 pb-6 border-t pt-6 space-y-3">
                         {navLinks.map((link) => (
                             <Link
                                 key={link.href}
                                 href={link.href}
-                                className={`block py-2 text-gray-700 hover:text-blue-600 transition-colors ${router.pathname === link.href ? 'text-blue-600 font-semibold' : ''
+                                className={`block py-3 px-4 rounded-xl font-semibold transition-all ${router.pathname === link.href
+                                        ? 'bg-emerald-50 text-emerald-600'
+                                        : 'text-gray-700 hover:bg-gray-50'
                                     }`}
                                 onClick={() => setMobileMenuOpen(false)}
                             >
                                 {link.label}
                             </Link>
                         ))}
+
                         {/* Mobile Auth Links */}
-                        <div className="border-t mt-2 pt-2">
+                        <div className="border-t mt-4 pt-4 space-y-3">
                             {isAuthenticated && user ? (
                                 <>
                                     <Link
                                         href={user.role === 'admin' ? '/admin/dashboard' : '/profile'}
-                                        className="block py-2 text-gray-700 hover:text-blue-600"
+                                        className="block py-3 px-4 text-gray-700 hover:bg-gray-50 rounded-xl"
                                         onClick={() => setMobileMenuOpen(false)}
                                     >
                                         My Account ({user.name})
@@ -191,7 +201,7 @@ export default function Header() {
                                             handleLogout();
                                             setMobileMenuOpen(false);
                                         }}
-                                        className="block w-full text-left py-2 text-red-600 hover:text-red-700"
+                                        className="block w-full text-left py-3 px-4 text-red-600 hover:bg-red-50 rounded-xl font-semibold"
                                     >
                                         Logout
                                     </button>
@@ -200,17 +210,17 @@ export default function Header() {
                                 <>
                                     <Link
                                         href="/login"
-                                        className="block py-2 text-gray-700 hover:text-blue-600"
+                                        className="block py-3 px-4 text-gray-700 hover:bg-gray-50 rounded-xl"
                                         onClick={() => setMobileMenuOpen(false)}
                                     >
                                         Login
                                     </Link>
                                     <Link
                                         href="/register"
-                                        className="block py-2 text-blue-600 hover:text-blue-700 font-semibold"
+                                        className="block py-3 px-4 bg-gradient-to-r from-emerald-600 to-teal-600 text-white rounded-xl font-semibold text-center"
                                         onClick={() => setMobileMenuOpen(false)}
                                     >
-                                        Register
+                                        Sign Up
                                     </Link>
                                 </>
                             )}

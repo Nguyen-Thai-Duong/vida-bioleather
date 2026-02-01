@@ -513,7 +513,7 @@ export default function AdminProducts() {
                                                 </div>
                                             </div>
                                         </td>
-                                        <td className="px-6 py-4">₫{product.price.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</td>
+                                        <td className="px-6 py-4">{product.price.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}₫</td>
                                         <td className="px-6 py-4 text-right">
                                             <button
                                                 onClick={() => handleEdit(product)}

@@ -33,7 +33,7 @@ export default async function handler(req, res) {
                             id: 2,
                             name: "Nguyen Thai Duong",
                             role: "CTO – Chief Technology Officer",
-                            bio: "Develops SCOBY bag process, applies technology solutions (QR code, website).",
+                            bio: "Develops SCOBY charm process, applies technology solutions (QR code, website).",
                             email: "duong@vidabioleather.com"
                         },
                         {

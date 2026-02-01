@@ -123,7 +123,7 @@ export default function Cart() {
                                         </Link>
                                         <p className="text-gray-600 mb-4 line-clamp-2">{item.description}</p>
                                         <p className="text-2xl font-bold text-green-600">
-                                            ₫{item.price.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
+                                            {item.price.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}₫
                                         </p>
                                     </div>
 
@@ -166,7 +166,7 @@ export default function Cart() {
                             <div className="space-y-4 mb-6">
                                 <div className="flex justify-between text-gray-600">
                                     <span>Subtotal ({items.reduce((sum, item) => sum + item.quantity, 0)} items)</span>
-                                    <span className="font-semibold">₫{getTotal.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span>
+                                    <span className="font-semibold">{getTotal.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}₫</span>
                                 </div>
                                 <div className="flex justify-between text-gray-600">
                                     <span>Shipping</span>
@@ -174,11 +174,11 @@ export default function Cart() {
                                 </div>
                                 <div className="flex justify-between text-gray-600">
                                     <span>Tax</span>
-                                    <span className="font-semibold">₫{(getTotal * 0.1).toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span>
+                                    <span className="font-semibold">{(getTotal * 0.1).toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}₫</span>
                                 </div>
                                 <div className="border-t pt-4 flex justify-between text-xl font-bold">
                                     <span>Total</span>
-                                    <span className="text-green-600">₫{(getTotal * 1.1).toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span>
+                                    <span className="text-green-600">{(getTotal * 1.1).toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}₫</span>
                                 </div>
                             </div>
 

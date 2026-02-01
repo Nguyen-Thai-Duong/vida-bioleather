@@ -103,8 +103,8 @@ export default function AdminQRGenerator() {
                                 >
                                     <option value="">-- Select Category --</option>
                                     <option value="D">D - raw materials</option>
-                                    <option value="N">N - kombucha liquid</option>
-                                    <option value="T">T - scoby bag</option>
+                                    <option value="N">N - starter liquid</option>
+                                    <option value="T">T - scoby charm</option>
                                 </select>
                                 <p className="text-xs text-gray-500 mt-1">Select a category code (will be in format: ViDa-D-XXXXX)</p>
                             </div>

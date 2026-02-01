@@ -63,7 +63,7 @@ export default function Checkout() {
             // Create order via API
             const orderData = {
                 items: items.map(item => ({
-                    productId: item._id,
+                    productId: item.id,
                     name: item.name,
                     price: item.price,
                     quantity: item.quantity,
@@ -188,7 +188,7 @@ export default function Checkout() {
                                         <h4 className="font-semibold">{item.name}</h4>
                                         <p className="text-sm text-gray-600">Quantity: {item.quantity}</p>
                                         <p className="text-sm font-semibold text-green-600">
-                                            ₫{(item.price * item.quantity).toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
+                                            {(item.price * item.quantity).toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}₫
                                         </p>
                                     </div>
                                 </div>
@@ -201,7 +201,7 @@ export default function Checkout() {
                         <div className="space-y-2">
                             <div className="flex justify-between text-gray-600">
                                 <span>Subtotal</span>
-                                <span>₫{getTotal.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span>
+                                <span>{getTotal.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}₫</span>
                             </div>
                             <div className="flex justify-between text-gray-600">
                                 <span>Shipping</span>
@@ -213,7 +213,7 @@ export default function Checkout() {
                             </div>
                             <div className="flex justify-between text-2xl font-bold pt-4 border-t">
                                 <span>Total</span>
-                                <span className="text-green-600">₫{(getTotal * 1.1).toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span>
+                                <span className="text-green-600">{(getTotal * 1.1).toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}₫</span>
                             </div>
                         </div>
                     </div>
@@ -244,7 +244,7 @@ export default function Checkout() {
                     <div className="bg-white rounded-lg max-w-md w-full p-6">
                         <h2 className="text-2xl font-bold mb-4">Confirm Order</h2>
                         <p className="text-gray-700 mb-6">
-                            Are you sure you want to place this order for <span className="font-bold text-green-600">₫{(getTotal * 1.1).toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span>?
+                            Are you sure you want to place this order for <span className="font-bold text-green-600">{(getTotal * 1.1).toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}₫</span>?
                         </p>
                         <p className="text-sm text-gray-600 mb-6">
                             Your order will be set to "Pending" status and an admin will process it soon.
