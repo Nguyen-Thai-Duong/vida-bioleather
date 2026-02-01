@@ -63,8 +63,8 @@ export default function Home() {
     return (
         <>
             <Head>
-                <title>VIDA Bioleather - Sustainable SCOBY Leather</title>
-                <meta name="description" content="Eco-friendly bioleather made from kombucha SCOBY. Sustainable alternative to animal leather for crafts, fashion, and DIY projects" />
+                <title>VIDA Bioleather – Sustainable Kombucha SCOBY Leather</title>
+                <meta name="description" content="VIDA Bioleather develops sustainable kombucha SCOBY leather, an innovative eco-friendly biomaterial for fashion and design." />
             </Head>
 
             {/* Hero Section - Product-Focused & Dynamic */}

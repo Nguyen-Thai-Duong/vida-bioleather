@@ -181,6 +181,7 @@ export default function Checkout() {
                                             src={item.image}
                                             alt={item.name}
                                             fill
+                                            unoptimized
                                             className="object-cover rounded"
                                         />
                                     </div>
@@ -207,13 +208,9 @@ export default function Checkout() {
                                 <span>Shipping</span>
                                 <span>Free</span>
                             </div>
-                            <div className="flex justify-between text-gray-600">
-                                <span>Tax (10%)</span>
-                                <span>₫{(getTotal * 0.1).toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span>
-                            </div>
                             <div className="flex justify-between text-2xl font-bold pt-4 border-t">
                                 <span>Total</span>
-                                <span className="text-green-600">{(getTotal * 1.1).toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}₫</span>
+                                <span className="text-green-600">{getTotal.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}₫</span>
                             </div>
                         </div>
                     </div>
@@ -244,7 +241,7 @@ export default function Checkout() {
                     <div className="bg-white rounded-lg max-w-md w-full p-6">
                         <h2 className="text-2xl font-bold mb-4">Confirm Order</h2>
                         <p className="text-gray-700 mb-6">
-                            Are you sure you want to place this order for <span className="font-bold text-green-600">{(getTotal * 1.1).toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}₫</span>?
+                            Are you sure you want to place this order for <span className="font-bold text-green-600">{getTotal.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}₫</span>?
                         </p>
                         <p className="text-sm text-gray-600 mb-6">
                             Your order will be set to "Pending" status and an admin will process it soon.
