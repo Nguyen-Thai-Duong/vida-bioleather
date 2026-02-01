@@ -154,7 +154,12 @@ export default function AdminProducts() {
             ? { ...formData, image: imageData, productId: editing }
             : { ...formData, image: imageData };
 
-        console.log('Submitting product:', body);
+        console.log('Submitting product:', {
+            ...body,
+            image: body.image ? `base64 string (${body.image.length} chars)` : 'NO IMAGE',
+            imageFile: imageFile ? 'New file selected' : 'No new file',
+            formDataImage: formData.image ? `Existing (${formData.image.length} chars)` : 'No existing image'
+        });
 
         try {
             const response = await fetch(url, {

@@ -66,6 +66,9 @@ async function handler(req, res) {
             // Update product
             const { productId, name, description, price, image, category, metadata } = req.body;
 
+            console.log('PUT request - productId:', productId);
+            console.log('PUT request - image length:', image ? image.length : 'no image');
+
             if (!productId) {
                 return res.status(400).json({ error: 'Product ID is required' });
             }
@@ -74,17 +77,21 @@ async function handler(req, res) {
                 updatedAt: new Date(),
             };
 
-            if (name) updateData.name = name;
-            if (description) updateData.description = description;
-            if (price) updateData.price = parseFloat(price);
-            if (image) updateData.image = image;
-            if (category) updateData.category = category;
-            if (metadata) updateData.metadata = metadata;
+            if (name !== undefined) updateData.name = name;
+            if (description !== undefined) updateData.description = description;
+            if (price !== undefined) updateData.price = parseFloat(price);
+            if (image !== undefined) updateData.image = image;
+            if (category !== undefined) updateData.category = category;
+            if (metadata !== undefined) updateData.metadata = metadata;
+
+            console.log('Update data:', { ...updateData, image: updateData.image ? `base64 string (${updateData.image.length} chars)` : 'no image' });
 
             const result = await db.collection('products').updateOne(
                 { _id: new ObjectId(productId) },
                 { $set: updateData }
             );
+
+            console.log('Update result:', { matchedCount: result.matchedCount, modifiedCount: result.modifiedCount });
 
             if (result.matchedCount === 0) {
                 return res.status(404).json({ error: 'Product not found' });

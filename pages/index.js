@@ -8,6 +8,9 @@ import Head from 'next/head';
 import ProductCard from '../components/ProductCard';
 import Image from 'next/image';
 
+// Placeholder image as data URI
+const PLACEHOLDER_IMAGE = 'data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22400%22 height=%22400%22%3E%3Crect fill=%22%23f3f4f6%22 width=%22400%22 height=%22400%22/%3E%3Ctext fill=%22%239ca3af%22 font-family=%22sans-serif%22 font-size=%2224%22 dy=%2210.5%22 font-weight=%22bold%22 x=%2250%25%22 y=%2250%25%22 text-anchor=%22middle%22%3ENo Image%3C/text%3E%3C/svg%3E';
+
 export default function Home() {
     const [products, setProducts] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -163,7 +166,7 @@ export default function Home() {
                                         >
                                             <div className="relative w-full h-full rounded-3xl overflow-hidden bg-gradient-to-br from-emerald-500/20 to-teal-500/20 backdrop-blur-xl border border-white/20 shadow-2xl hover:shadow-emerald-500/50 transition-all duration-500 hover:scale-105">
                                                 <Image
-                                                    src={products[0].image || '/placeholder.png'}
+                                                    src={products[0].image || PLACEHOLDER_IMAGE}
                                                     alt={products[0].name}
                                                     fill
                                                     unoptimized
@@ -185,7 +188,7 @@ export default function Home() {
                                         >
                                             <div className="relative w-full h-full rounded-2xl overflow-hidden bg-gradient-to-br from-teal-500/20 to-cyan-500/20 backdrop-blur-xl border border-white/20 shadow-xl hover:shadow-teal-500/50 transition-all duration-500 hover:scale-110">
                                                 <Image
-                                                    src={products[1].image || '/placeholder.png'}
+                                                    src={products[1].image || PLACEHOLDER_IMAGE}
                                                     alt={products[1].name}
                                                     fill
                                                     unoptimized
@@ -207,7 +210,7 @@ export default function Home() {
                                         >
                                             <div className="relative w-full h-full rounded-2xl overflow-hidden bg-gradient-to-br from-cyan-500/20 to-emerald-500/20 backdrop-blur-xl border border-white/20 shadow-xl hover:shadow-cyan-500/50 transition-all duration-500 hover:scale-110">
                                                 <Image
-                                                    src={products[2].image || '/placeholder.png'}
+                                                    src={products[2].image || PLACEHOLDER_IMAGE}
                                                     alt={products[2].name}
                                                     fill
                                                     unoptimized

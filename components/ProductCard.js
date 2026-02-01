@@ -8,6 +8,9 @@ import Image from 'next/image';
 import useCartStore from '../store/cartStore';
 import { useState, memo } from 'react';
 
+// Placeholder image as data URI
+const PLACEHOLDER_IMAGE = 'data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22400%22 height=%22400%22%3E%3Crect fill=%22%23f3f4f6%22 width=%22400%22 height=%22400%22/%3E%3Ctext fill=%22%239ca3af%22 font-family=%22sans-serif%22 font-size=%2224%22 dy=%2210.5%22 font-weight=%22bold%22 x=%2250%25%22 y=%2250%25%22 text-anchor=%22middle%22%3ENo Image%3C/text%3E%3C/svg%3E';
+
 const ProductCard = memo(function ProductCard({ product }) {
     const addItem = useCartStore((state) => state.addItem);
     const [added, setAdded] = useState(false);
@@ -42,7 +45,7 @@ const ProductCard = memo(function ProductCard({ product }) {
                 <div className="relative h-80 bg-gradient-to-br from-gray-100 to-gray-50 overflow-hidden">
                     {/* Image with parallax-like zoom */}
                     <Image
-                        src={product.imageUrl || product.image || '/placeholder.png'}
+                        src={product.imageUrl || product.image || PLACEHOLDER_IMAGE}
                         alt={product.name}
                         fill
                         unoptimized
