@@ -45,6 +45,7 @@ const ProductCard = memo(function ProductCard({ product }) {
                         src={product.imageUrl || product.image || '/placeholder.png'}
                         alt={product.name}
                         fill
+                        unoptimized
                         className="object-cover transition-all duration-700"
                         style={{
                             transform: isHovered ? 'scale(1.15)' : 'scale(1)',

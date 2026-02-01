@@ -238,6 +238,7 @@ export default function ProductDetail() {
                                 src={product.image}
                                 alt={product.name}
                                 fill
+                                unoptimized
                                 className="object-cover transition-transform duration-700 group-hover:scale-110"
                             />
                         </div>

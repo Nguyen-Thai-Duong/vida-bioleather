@@ -165,6 +165,7 @@ export default function Home() {
                                                     src={products[0].image || '/placeholder.png'}
                                                     alt={products[0].name}
                                                     fill
+                                                    unoptimized
                                                     className="object-cover opacity-90 group-hover:opacity-100 group-hover:scale-110 transition-all duration-700"
                                                 />
                                                 <div className="absolute inset-0 bg-gradient-to-t from-slate-900/80 via-transparent to-transparent"></div>
@@ -186,6 +187,7 @@ export default function Home() {
                                                     src={products[1].image || '/placeholder.png'}
                                                     alt={products[1].name}
                                                     fill
+                                                    unoptimized
                                                     className="object-cover opacity-80 group-hover:opacity-100 transition-opacity duration-500"
                                                 />
                                                 <div className="absolute inset-0 bg-gradient-to-t from-slate-900/60 via-transparent to-transparent"></div>
@@ -207,6 +209,7 @@ export default function Home() {
                                                     src={products[2].image || '/placeholder.png'}
                                                     alt={products[2].name}
                                                     fill
+                                                    unoptimized
                                                     className="object-cover opacity-80 group-hover:opacity-100 transition-opacity duration-500"
                                                 />
                                                 <div className="absolute inset-0 bg-gradient-to-t from-slate-900/60 via-transparent to-transparent"></div>
