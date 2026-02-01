@@ -44,7 +44,8 @@ export default function Home() {
 
     const fetchProducts = async () => {
         try {
-            const response = await fetch('/api/products');
+            // Add timestamp to bypass cache
+            const response = await fetch(`/api/products?_t=${Date.now()}`);
             const data = await response.json();
             console.log('Homepage - Fetched products:', data);
             if (data.success && data.products) {

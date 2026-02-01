@@ -68,7 +68,8 @@ export default function AdminProducts() {
 
     const fetchProducts = async () => {
         try {
-            const response = await fetch('/api/products');
+            // Add timestamp to bypass Vercel edge cache
+            const response = await fetch(`/api/products?_t=${Date.now()}`);
             const data = await response.json();
             console.log('Fetched products:', data);
             if (response.ok && data.success && data.products) {

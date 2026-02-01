@@ -6,6 +6,11 @@
 import clientPromise from '../../lib/db';
 
 export default async function handler(req, res) {
+    // Prevent caching to ensure fresh data after updates
+    res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate');
+    res.setHeader('Pragma', 'no-cache');
+    res.setHeader('Expires', '0');
+
     if (req.method !== 'GET') {
         return res.status(405).json({ error: 'Method not allowed' });
     }
