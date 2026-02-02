@@ -83,6 +83,42 @@ export default function Home() {
             <Head>
                 <title>VIDA Bioleather – Sustainable Kombucha SCOBY Leather</title>
                 <meta name="description" content="VIDA Bioleather develops sustainable kombucha SCOBY leather, an innovative eco-friendly biomaterial for fashion and design." />
+                <meta name="keywords" content="VIDA Bioleather, kombucha leather, SCOBY leather, sustainable leather, eco-friendly biomaterial, vegan leather, biodegradable leather, kombucha SCOBY, sustainable fashion, ethical fashion, green materials" />
+                <link rel="canonical" href="https://vida-bioleather.vercel.app/" />
+
+                {/* Structured Data for SEO */}
+                <script type="application/ld+json">
+                    {JSON.stringify({
+                        "@context": "https://schema.org",
+                        "@type": "Organization",
+                        "name": "VIDA Bioleather",
+                        "description": "VIDA Bioleather develops sustainable kombucha SCOBY leather, an innovative eco-friendly biomaterial for fashion and design.",
+                        "url": "https://vida-bioleather.vercel.app",
+                        "logo": "https://vida-bioleather.vercel.app/header-logo.png",
+                        "contactPoint": {
+                            "@type": "ContactPoint",
+                            "telephone": "+84-028-3456-7890",
+                            "contactType": "Customer Service",
+                            "email": "duongntce180478@fpt.edu.vn"
+                        },
+                        "sameAs": [
+                            "https://www.facebook.com/profile.php?id=61582416837773"
+                        ]
+                    })}
+                </script>
+                <script type="application/ld+json">
+                    {JSON.stringify({
+                        "@context": "https://schema.org",
+                        "@type": "WebSite",
+                        "name": "VIDA Bioleather",
+                        "url": "https://vida-bioleather.vercel.app",
+                        "potentialAction": {
+                            "@type": "SearchAction",
+                            "target": "https://vida-bioleather.vercel.app/qr-search?q={search_term_string}",
+                            "query-input": "required name=search_term_string"
+                        }
+                    })}
+                </script>
             </Head>
 
             {/* Hero Section - Product-Focused & Dynamic */}

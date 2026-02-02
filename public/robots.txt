@@ -1,0 +1,15 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://vida-bioleather.vercel.app/sitemap.xml
+
+# Block admin pages from search engines
+User-agent: *
+Disallow: /admin/
+Disallow: /api/
+Disallow: /cart
+Disallow: /checkout
+Disallow: /login
+Disallow: /register
+Disallow: /profile
+Disallow: /forgot-password

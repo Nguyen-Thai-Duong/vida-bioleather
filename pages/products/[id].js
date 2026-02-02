@@ -195,6 +195,41 @@ export default function ProductDetail() {
             <Head>
                 <title>{product.name} - VIDA Bioleather</title>
                 <meta name="description" content={product.description} />
+                <meta name="keywords" content={`${product.name}, VIDA Bioleather, kombucha leather, SCOBY leather, sustainable biomaterial, eco-friendly leather`} />
+                <link rel="canonical" href={`https://vida-bioleather.vercel.app/products/${id}`} />
+
+                {/* Open Graph */}
+                <meta property="og:title" content={`${product.name} - VIDA Bioleather`} />
+                <meta property="og:description" content={product.description} />
+                <meta property="og:image" content={product.image} />
+                <meta property="og:url" content={`https://vida-bioleather.vercel.app/products/${id}`} />
+                <meta property="og:type" content="product" />
+
+                {/* Structured Data for Product */}
+                <script type="application/ld+json">
+                    {JSON.stringify({
+                        "@context": "https://schema.org",
+                        "@type": "Product",
+                        "name": product.name,
+                        "description": product.description,
+                        "image": product.image,
+                        "brand": {
+                            "@type": "Brand",
+                            "name": "VIDA Bioleather"
+                        },
+                        "offers": {
+                            "@type": "Offer",
+                            "price": product.price,
+                            "priceCurrency": "VND",
+                            "availability": "https://schema.org/InStock"
+                        },
+                        "aggregateRating": reviews.length > 0 ? {
+                            "@type": "AggregateRating",
+                            "ratingValue": (reviews.reduce((acc, r) => acc + r.rating, 0) / reviews.length).toFixed(1),
+                            "reviewCount": reviews.length
+                        } : undefined
+                    })}
+                </script>
             </Head>
 
             {/* Dynamic Hero Section */}
