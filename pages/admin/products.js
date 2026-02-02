@@ -78,12 +78,17 @@ export default function AdminProducts() {
                     data.products.map(async (product) => {
                         try {
                             const imgRes = await fetch(`/api/products/${product.id}/image`);
+                            console.log(`Fetching image for ${product.name} (${product.id}):`, imgRes.status);
                             if (imgRes.ok) {
                                 const imgData = await imgRes.json();
+                                console.log(`Image loaded for ${product.name}:`, imgData.image ? 'YES' : 'NO');
                                 return { ...product, image: imgData.image };
+                            } else {
+                                const error = await imgRes.text();
+                                console.error(`Failed to load image for ${product.name}:`, error);
                             }
                         } catch (err) {
-                            console.warn(`Failed to load image for ${product.name}`);
+                            console.error(`Failed to load image for ${product.name}:`, err);
                         }
                         return product;
                     })
