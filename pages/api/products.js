@@ -39,11 +39,21 @@ export default async function handler(req, res) {
         const includeImages = req.query.includeImages === 'true';
         const projection = includeImages ? {} : { image: 0 };
 
+        console.log('=== FETCHING ALL PRODUCTS ===');
+        console.log('includeImages query param:', req.query.includeImages);
+        console.log('includeImages boolean:', includeImages);
+        console.log('Projection:', projection);
+
         const products = await db.collection('products').find({}).project(projection).toArray();
 
-        console.log('=== FETCHING ALL PRODUCTS ===');
-        console.log('Total products:', products.length);
-        console.log('Include images:', includeImages);
+        console.log('Total products fetched:', products.length);
+        products.forEach((p, idx) => {
+            console.log(`Product ${idx} (${p.name}):`, {
+                hasImage: !!p.image,
+                imageLength: p.image ? p.image.length : 0,
+                imagePreview: p.image ? p.image.substring(0, 30) : 'NO IMAGE'
+            });
+        });
 
         return res.status(200).json({
             success: true,
