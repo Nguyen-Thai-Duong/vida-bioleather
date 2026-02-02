@@ -22,15 +22,11 @@ export default async function handler(req, res) {
                 return res.status(404).json({ error: 'Image not found' });
             }
 
-            // Extract base64 data
-            const base64Data = product.image.replace(/^data:image\/\w+;base64,/, '');
-            const buffer = Buffer.from(base64Data, 'base64');
-
-            // Set appropriate headers
-            res.setHeader('Content-Type', 'image/png');
+            // Return base64 string directly for use in <img> tags
+            res.setHeader('Content-Type', 'application/json');
             res.setHeader('Cache-Control', 'public, max-age=31536000, immutable');
 
-            return res.status(200).send(buffer);
+            return res.status(200).json({ image: product.image });
         }
 
         return res.status(405).json({ error: 'Method not allowed' });
