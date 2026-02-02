@@ -38,6 +38,15 @@ export default async function handler(req, res) {
         // Get all products
         const products = await db.collection('products').find({}).toArray();
 
+        console.log('=== FETCHING ALL PRODUCTS ===');
+        console.log('Total products:', products.length);
+        products.forEach((p, idx) => {
+            console.log(`Product ${idx} (${p.name}):`, {
+                hasImage: !!p.image,
+                imageLength: p.image ? p.image.length : 0
+            });
+        });
+
         return res.status(200).json({
             success: true,
             products,
