@@ -71,17 +71,25 @@ export default function AdminProducts() {
             // Add timestamp to bypass Vercel edge cache
             const response = await fetch(`/api/products?_t=${Date.now()}`);
             const data = await response.json();
-            console.log('Fetched products:', data);
+            console.log('Fetched products (without images):', data);
             if (response.ok && data.success && data.products) {
-                // Log each product's image status
-                data.products.forEach((p, idx) => {
-                    console.log(`Product ${idx} (${p.name}):`, {
-                        hasImage: !!p.image,
-                        imageLength: p.image ? p.image.length : 0,
-                        imagePreview: p.image ? p.image.substring(0, 50) + '...' : 'NO IMAGE'
-                    });
-                });
-                setProducts(data.products);
+                // Fetch images separately for each product
+                const productsWithImages = await Promise.all(
+                    data.products.map(async (product) => {
+                        try {
+                            const imgRes = await fetch(`/api/products/${product.id}/image`);
+                            if (imgRes.ok) {
+                                const imgData = await imgRes.json();
+                                return { ...product, image: imgData.image };
+                            }
+                        } catch (err) {
+                            console.warn(`Failed to load image for ${product.name}`);
+                        }
+                        return product;
+                    })
+                );
+                console.log('Products with images loaded:', productsWithImages.length);
+                setProducts(productsWithImages);
             } else {
                 console.warn('No products found or invalid response');
                 setProducts([]);

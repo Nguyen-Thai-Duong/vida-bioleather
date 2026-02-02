@@ -36,16 +36,12 @@ export default async function handler(req, res) {
         }
 
         // Get all products
-        const products = await db.collection('products').find({}).toArray();
+        // Exclude images to avoid 4MB response limit - images loaded separately
+        const products = await db.collection('products').find({}).project({ image: 0 }).toArray();
 
         console.log('=== FETCHING ALL PRODUCTS ===');
         console.log('Total products:', products.length);
-        products.forEach((p, idx) => {
-            console.log(`Product ${idx} (${p.name}):`, {
-                hasImage: !!p.image,
-                imageLength: p.image ? p.image.length : 0
-            });
-        });
+        console.log('Images excluded from response to stay under 4MB limit');
 
         return res.status(200).json({
             success: true,
