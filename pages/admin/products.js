@@ -68,19 +68,27 @@ export default function AdminProducts() {
 
     const fetchProducts = async () => {
         try {
-            // Fetch products WITH images using query parameter
-            const response = await fetch(`/api/products?includeImages=true&_t=${Date.now()}`);
+            const response = await fetch(`/api/products?_t=${Date.now()}`);
             const data = await response.json();
-            console.log('Fetched products with images:', data);
+            console.log('Fetched products (no images):', data);
             if (response.ok && data.success && data.products) {
-                console.log('Products loaded:', data.products.length);
-                data.products.forEach((p, idx) => {
-                    console.log(`Product ${idx} (${p.name}):`, {
-                        hasImage: !!p.image,
-                        imageLength: p.image ? p.image.length : 0
-                    });
-                });
-                setProducts(data.products);
+                // Fetch images individually for each product
+                const productsWithImages = await Promise.all(
+                    data.products.map(async (product) => {
+                        try {
+                            const imgResponse = await fetch(`/api/products?id=${product.id}`);
+                            if (imgResponse.ok) {
+                                const fullProduct = await imgResponse.json();
+                                return { ...product, image: fullProduct.image };
+                            }
+                        } catch (err) {
+                            console.warn(`Failed to load image for ${product.name}`);
+                        }
+                        return product;
+                    })
+                );
+                console.log('Products with images loaded:', productsWithImages.length);
+                setProducts(productsWithImages);
             } else {
                 console.warn('No products found or invalid response');
                 setProducts([]);

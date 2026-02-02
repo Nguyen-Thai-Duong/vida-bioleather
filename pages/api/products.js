@@ -35,25 +35,12 @@ export default async function handler(req, res) {
             return res.status(200).json(product);
         }
 
-        // Get all products - include images but users can request without them
-        const includeImages = req.query.includeImages === 'true';
-        const projection = includeImages ? {} : { image: 0 };
+        // Get all products - ALWAYS exclude images to avoid response size limits
+        const products = await db.collection('products').find({}).project({ image: 0 }).toArray();
 
         console.log('=== FETCHING ALL PRODUCTS ===');
-        console.log('includeImages query param:', req.query.includeImages);
-        console.log('includeImages boolean:', includeImages);
-        console.log('Projection:', projection);
-
-        const products = await db.collection('products').find({}).project(projection).toArray();
-
         console.log('Total products fetched:', products.length);
-        products.forEach((p, idx) => {
-            console.log(`Product ${idx} (${p.name}):`, {
-                hasImage: !!p.image,
-                imageLength: p.image ? p.image.length : 0,
-                imagePreview: p.image ? p.image.substring(0, 30) : 'NO IMAGE'
-            });
-        });
+        console.log('Images excluded - fetch individually via /api/products/[id]');
 
         return res.status(200).json({
             success: true,
