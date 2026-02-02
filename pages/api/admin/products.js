@@ -66,32 +66,49 @@ async function handler(req, res) {
             // Update product
             const { productId, name, description, price, image, category, metadata } = req.body;
 
-            console.log('PUT request - productId:', productId);
-            console.log('PUT request - image length:', image ? image.length : 'no image');
+            console.log('=== PUT REQUEST START ===');
+            console.log('productId:', productId);
+            console.log('name:', name);
+            console.log('description:', description ? description.substring(0, 50) : 'none');
+            console.log('price:', price);
+            console.log('image received:', image ? 'YES' : 'NO');
+            console.log('image length:', image ? image.length : 0);
+            console.log('image starts with:', image ? image.substring(0, 30) : 'none');
+            console.log('category:', category);
+            console.log('metadata:', metadata);
 
             if (!productId) {
                 return res.status(400).json({ error: 'Product ID is required' });
             }
 
+            // Build update document - ALWAYS include all fields
             const updateData = {
                 updatedAt: new Date(),
+                name: name,
+                description: description,
+                price: parseFloat(price),
+                image: image,
+                category: category || 'General',
+                metadata: metadata || {}
             };
 
-            if (name !== undefined) updateData.name = name;
-            if (description !== undefined) updateData.description = description;
-            if (price !== undefined) updateData.price = parseFloat(price);
-            if (image !== undefined) updateData.image = image;
-            if (category !== undefined) updateData.category = category;
-            if (metadata !== undefined) updateData.metadata = metadata;
+            console.log('=== UPDATE DATA ===');
+            console.log('updatedAt:', updateData.updatedAt);
+            console.log('name:', updateData.name);
+            console.log('price:', updateData.price);
+            console.log('image in updateData:', updateData.image ? 'YES' : 'NO');
+            console.log('image length in updateData:', updateData.image ? updateData.image.length : 0);
 
-            console.log('Update data:', { ...updateData, image: updateData.image ? `base64 string (${updateData.image.length} chars)` : 'no image' });
-
+            console.log('=== EXECUTING DATABASE UPDATE ===');
             const result = await db.collection('products').updateOne(
                 { _id: new ObjectId(productId) },
                 { $set: updateData }
             );
 
-            console.log('Update result:', { matchedCount: result.matchedCount, modifiedCount: result.modifiedCount });
+            console.log('=== UPDATE RESULT ===');
+            console.log('matchedCount:', result.matchedCount);
+            console.log('modifiedCount:', result.modifiedCount);
+            console.log('acknowledged:', result.acknowledged);
 
             if (result.matchedCount === 0) {
                 return res.status(404).json({ error: 'Product not found' });
