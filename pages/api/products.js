@@ -35,13 +35,15 @@ export default async function handler(req, res) {
             return res.status(200).json(product);
         }
 
-        // Get all products
-        // Exclude images to avoid 4MB response limit - images loaded separately
-        const products = await db.collection('products').find({}).project({ image: 0 }).toArray();
+        // Get all products - include images but users can request without them
+        const includeImages = req.query.includeImages === 'true';
+        const projection = includeImages ? {} : { image: 0 };
+
+        const products = await db.collection('products').find({}).project(projection).toArray();
 
         console.log('=== FETCHING ALL PRODUCTS ===');
         console.log('Total products:', products.length);
-        console.log('Images excluded from response to stay under 4MB limit');
+        console.log('Include images:', includeImages);
 
         return res.status(200).json({
             success: true,

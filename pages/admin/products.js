@@ -68,33 +68,19 @@ export default function AdminProducts() {
 
     const fetchProducts = async () => {
         try {
-            // Add timestamp to bypass Vercel edge cache
-            const response = await fetch(`/api/products?_t=${Date.now()}`);
+            // Fetch products WITH images using query parameter
+            const response = await fetch(`/api/products?includeImages=true&_t=${Date.now()}`);
             const data = await response.json();
-            console.log('Fetched products (without images):', data);
+            console.log('Fetched products with images:', data);
             if (response.ok && data.success && data.products) {
-                // Fetch images separately for each product
-                const productsWithImages = await Promise.all(
-                    data.products.map(async (product) => {
-                        try {
-                            const imgRes = await fetch(`/api/products/${product.id}/image`);
-                            console.log(`Fetching image for ${product.name} (${product.id}):`, imgRes.status);
-                            if (imgRes.ok) {
-                                const imgData = await imgRes.json();
-                                console.log(`Image loaded for ${product.name}:`, imgData.image ? 'YES' : 'NO');
-                                return { ...product, image: imgData.image };
-                            } else {
-                                const error = await imgRes.text();
-                                console.error(`Failed to load image for ${product.name}:`, error);
-                            }
-                        } catch (err) {
-                            console.error(`Failed to load image for ${product.name}:`, err);
-                        }
-                        return product;
-                    })
-                );
-                console.log('Products with images loaded:', productsWithImages.length);
-                setProducts(productsWithImages);
+                console.log('Products loaded:', data.products.length);
+                data.products.forEach((p, idx) => {
+                    console.log(`Product ${idx} (${p.name}):`, {
+                        hasImage: !!p.image,
+                        imageLength: p.image ? p.image.length : 0
+                    });
+                });
+                setProducts(data.products);
             } else {
                 console.warn('No products found or invalid response');
                 setProducts([]);
