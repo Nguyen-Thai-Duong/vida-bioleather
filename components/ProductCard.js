@@ -16,6 +16,15 @@ const ProductCard = memo(function ProductCard({ product }) {
     const [added, setAdded] = useState(false);
     const [isHovered, setIsHovered] = useState(false);
 
+    // Debug logging
+    if (!product.image && !product.imageUrl) {
+        console.warn(`ProductCard: ${product.name} has no image`, {
+            id: product.id,
+            hasImage: !!product.image,
+            hasImageUrl: !!product.imageUrl
+        });
+    }
+
     const handleAddToCart = (e) => {
         e.preventDefault();
         addItem(product);

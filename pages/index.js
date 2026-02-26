@@ -66,6 +66,12 @@ export default function Home() {
                         return product;
                     })
                 );
+                console.log('Products with images loaded:', productsWithImages.map(p => ({
+                    id: p.id,
+                    name: p.name,
+                    hasImage: !!p.image,
+                    imageLength: p.image ? p.image.length : 0
+                })));
                 setProducts(productsWithImages);
                 setFilteredProducts(productsWithImages);
             } else {
