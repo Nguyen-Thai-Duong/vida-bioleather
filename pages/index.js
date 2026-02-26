@@ -51,19 +51,26 @@ export default function Home() {
             const data = await response.json();
             console.log('Homepage - Fetched products (no images):', data);
             if (data.success && data.products) {
-                // Fetch images individually
+                // Fetch images individually using the single product endpoint
                 const productsWithImages = await Promise.all(
                     data.products.map(async (product) => {
                         try {
-                            const imgResponse = await fetch(`/api/products?id=${product.id}`);
+                            // Fetch full product data including image
+                            const imgResponse = await fetch(`/api/products?id=${product.id}&_t=${Date.now()}`);
                             if (imgResponse.ok) {
                                 const fullProduct = await imgResponse.json();
+                                console.log(`Loaded image for ${product.name}:`, {
+                                    hasImage: !!fullProduct.image,
+                                    imageLength: fullProduct.image ? fullProduct.image.length : 0
+                                });
                                 return { ...product, image: fullProduct.image };
+                            } else {
+                                console.error(`Failed to fetch image for ${product.name}:`, imgResponse.status);
                             }
                         } catch (err) {
-                            console.warn(`Failed to load image for ${product.name}`);
+                            console.error(`Error loading image for ${product.name}:`, err);
                         }
-                        return product;
+                        return { ...product, image: PLACEHOLDER_IMAGE };
                     })
                 );
                 console.log('Products with images loaded:', productsWithImages.map(p => ({
