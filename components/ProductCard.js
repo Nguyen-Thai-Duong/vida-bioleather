@@ -16,14 +16,15 @@ const ProductCard = memo(function ProductCard({ product }) {
     const [added, setAdded] = useState(false);
     const [isHovered, setIsHovered] = useState(false);
 
-    // Debug logging
-    if (!product.image && !product.imageUrl) {
-        console.warn(`ProductCard: ${product.name} has no image`, {
-            id: product.id,
-            hasImage: !!product.image,
-            hasImageUrl: !!product.imageUrl
-        });
-    }
+    // Debug logging - log the actual image data
+    console.log(`ProductCard rendering: ${product.name}`, {
+        id: product.id,
+        hasImage: !!product.image,
+        hasImageUrl: !!product.imageUrl,
+        imageType: typeof product.image,
+        imagePreview: product.image ? product.image.substring(0, 50) : 'NO IMAGE',
+        willUse: product.imageUrl || product.image || 'PLACEHOLDER'
+    });
 
     const handleAddToCart = (e) => {
         e.preventDefault();
