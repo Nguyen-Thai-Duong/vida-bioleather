@@ -16,15 +16,8 @@ const ProductCard = memo(function ProductCard({ product }) {
     const [added, setAdded] = useState(false);
     const [isHovered, setIsHovered] = useState(false);
 
-    // Debug logging - log the actual image data
-    console.log(`ProductCard rendering: ${product.name}`, {
-        id: product.id,
-        hasImage: !!product.image,
-        hasImageUrl: !!product.imageUrl,
-        imageType: typeof product.image,
-        imagePreview: product.image ? product.image.substring(0, 50) : 'NO IMAGE',
-        willUse: product.imageUrl || product.image || 'PLACEHOLDER'
-    });
+    // Use product.image as the single source of truth
+    const imageSrc = product.image || PLACEHOLDER_IMAGE;
 
     const handleAddToCart = (e) => {
         e.preventDefault();
@@ -55,12 +48,11 @@ const ProductCard = memo(function ProductCard({ product }) {
                 <div className="relative h-80 bg-gradient-to-br from-gray-100 to-gray-50 overflow-hidden">
                     {/* Image with parallax-like zoom */}
                     <Image
-                        src={product.imageUrl || product.image || PLACEHOLDER_IMAGE}
+                        src={imageSrc}
                         alt={product.name}
                         fill
                         unoptimized
                         priority={false}
-                        key={product.image}
                         className="object-cover transition-all duration-700"
                         style={{
                             transform: isHovered ? 'scale(1.15)' : 'scale(1)',
@@ -160,6 +152,12 @@ const ProductCard = memo(function ProductCard({ product }) {
             </div>
         </div>
     );
+}, (prevProps, nextProps) => {
+    // Re-render if product data changes, especially the image
+    return prevProps.product.id === nextProps.product.id &&
+        prevProps.product.image === nextProps.product.image &&
+        prevProps.product.name === nextProps.product.name &&
+        prevProps.product.price === nextProps.product.price;
 });
 
 export default ProductCard;
